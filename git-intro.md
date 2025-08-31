@@ -1,11 +1,22 @@
-What is Version control?
+### What is Version control?
+```
 version control in a process of tracking and managing all tha changes in source code.
+```
 
 what is git?
-git is VCS(version control system) which track and manage the changes in code base.
+```
+Git is open-source distributed version control system (DVCS) which track and manage the changes in code base.
+We can use Git privately as well as publically.
+Git was developed by Linus Torvalds in 2005 for Linux kernel development. 
+```
 
 what is github?
-it is a websit/webserver where you can create your remote repo and store, manage and track your code there, it allow sharing of same repo to multiple developers so that can track every change and get aware who change it and why.
+```
+GitHub, a hosting service for Git repositories, allows you to access and download projects from any computer. Here’s what you can do with GitHub:
+Store Repositories: GitHub hosts your repositories.
+Collaborate: Work with other developers from any location.
+Version Control: Manage collaborative workflows using Git and GitHub.
+```
 
 ### Files
 ```
