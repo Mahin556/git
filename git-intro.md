@@ -34,6 +34,10 @@ Version Control: Manage collaborative workflows using Git and GitHub.
 - Use tags to mark releases, major milestones, or stable points.
 - Prefer annotated tags (-a -m) for anything public or shared.
 - Create tags after passing tests or before releasing code.
+
+#### Type of tags
+- lightweight tag:-  just a name for a commit
+- annotated tag:- stores tagname, author, the date, and a message, Recommended for releases and sharing with others
   
 ```
 git tag <tagname> - Create a lightweight tag
