@@ -56,6 +56,10 @@ git tag -f v1.0 <new-commit-hash>
 git push --force origin v1.0
 ```
 
+### Stash
+#### What is stash?
+
+
 ```
 git --version
 git -v
