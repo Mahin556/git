@@ -25,6 +25,32 @@ Version Control: Manage collaborative workflows using Git and GitHub.
 
 ```
 
+### Tagging
+#### What is a Tag?
+- A tag in Git is like a label or bookmark for a specific commit.  
+- Tags are commonly used to mark important points in your project history, like releases, milestones, or hotfixes.
+
+#### Tagging Best Practices
+- Use tags to mark releases, major milestones, or stable points.
+- Prefer annotated tags (-a -m) for anything public or shared.
+- Create tags after passing tests or before releasing code.
+  
+```
+git tag <tagname> - Create a lightweight tag
+git tag -a <tagname> -m "message" - Create an annotated tag
+git tag -a <tagname> -m "message" <commit-hash> - Tag a specific commit
+git tag - List tags
+git show <tagname> - Show tag + commit details
+git push origin v1.0
+git push --tags
+git tag -d v1.0 #Delete a tag locally
+git push origin --delete tag v1.0 #Delete a tag from remote
+git push --tags #Push all tags at once
+
+#Move a tag to a different commit and update the remote:
+git tag -f v1.0 <new-commit-hash>
+git push --force origin v1.0
+```
 
 ```
 git --version
@@ -66,9 +92,9 @@ git config --global user.email "you@example.com"
 git config --global --unset code.editor
 git config --global init.defaultBranch main
 
-git tag <tagname> - Create a lightweight tag
-git tag -a <tagname> -m "message" - Create an annotated tag
-git tag <tagname> <commit-hash> - Tag a specific commit
-git tag - List tags
-git show <tagname> - Show tag details
+
+
+
+
+
 ```
