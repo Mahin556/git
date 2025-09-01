@@ -65,4 +65,10 @@ git config --global user.name "Your Name"
 git config --global user.email "you@example.com"
 git config --global --unset code.editor
 git config --global init.defaultBranch main
+
+git tag <tagname> - Create a lightweight tag
+git tag -a <tagname> -m "message" - Create an annotated tag
+git tag <tagname> <commit-hash> - Tag a specific commit
+git tag - List tags
+git show <tagname> - Show tag details
 ```
