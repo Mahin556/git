@@ -72,6 +72,7 @@ git status - See what is staged
 git status -s
 git restore <file>
 git restore --staged <file> - Unstage a file == git reset HEAD <file_name>
+git reset [file] # unstaged, but file.txt still modified(keeps changes in your working directory)
 git rm --cached <file>
 git commit -m "message" - Commit staged changes with a message
 git commit -a -m "message" - Commit all tracked changes (skip staging) but not work with new/untracked file only work with modified/deleted file
@@ -85,7 +86,11 @@ git commit -a  ---> add + commit
 git commit --allow-empty -m "Start project" #Create an empty commit
 git commit --no-edit #Use previous commit message (no editor)
 git commit --amend -m "Corrected message" #to fix typo in last commit message
+
+git show <commit_sha> #show the changes in commit
 git reset --soft HEAD~1 # to undo the last commit and keep your changes staged when accidentally committed the wrong files.
+git reset --hard <commit_sha> #to revert back to the previous commit
+
 git config credential.helper "cache --timeout=3600"
 git config --list
 git config --local --list
@@ -101,8 +106,10 @@ git config --global --unset code.editor
 git config --global init.defaultBranch main
 git config --global color.ui auto #set automatic command line coloring for Git for easy reviewing
 
+git diff #Shows differences between the working directory and the staging area
+git diff --staged (or --cached) #Shows differences between the staging area and the last commit.
 
-
+git blame <file_path>  #show what changed in file, who changed and when
 
 
 
