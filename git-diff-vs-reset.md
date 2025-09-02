@@ -46,6 +46,3 @@
 * **Staging area ↔ Last commit** → `git diff --staged`
 * **Remove from staging, keep changes** → `git reset [file]`
 
----
-
-👉 Do you want me to also explain **`git restore --staged`** (the newer alternative to `git reset [file]`)?
