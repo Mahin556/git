@@ -1,7 +1,3 @@
-Good question 👍 These two look similar but behave differently. Let’s go step by step:
-
----
-
 ## 🔹 `git reset --soft HEAD~1`
 
 * **Meaning:** Move `HEAD` and the current branch pointer **back by 1 commit**, but **keep everything staged**.
