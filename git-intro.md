@@ -99,6 +99,7 @@ git config --global user.name "Your Name"
 git config --global user.email "you@example.com"
 git config --global --unset code.editor
 git config --global init.defaultBranch main
+git config --global color.ui auto #set automatic command line coloring for Git for easy reviewing
 
 
 
