@@ -46,6 +46,4 @@ git reset --hard a1b2c3d
 * **soft = safe** (keeps changes staged)
 * **hard = harsh** (wipes everything to match commit)
 
----
 
-Do you want me to also explain **`git reset --mixed`** (the default) so you see where it fits between `--soft` and `--hard`?
