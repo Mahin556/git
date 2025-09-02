@@ -1,0 +1,86 @@
+
+## **1. View Commit History**
+
+* **Full commit history**
+
+```bash
+git log
+```
+
+* **Short summary of commits (one line each)**
+
+```bash
+git log --oneline
+```
+
+* **Filter commits by author**
+
+```bash
+git log --author="Alice"
+```
+
+* **Show recent commits (e.g., last 2 weeks)**
+
+```bash
+git log --since="2 weeks ago"
+```
+
+* **Show files changed per commit**
+
+```bash
+git log --stat
+```
+
+* **Show branch history as a graph**
+
+```bash
+git log --graph --oneline
+```
+
+---
+
+## **2. View Details of a Specific Commit**
+
+* **Show all info for a specific commit**
+
+```bash
+git show <commit_hash>
+```
+
+> Example: `git show 09f4acd`
+
+---
+
+## **3. Compare Changes**
+
+* **See unstaged changes (working directory vs last commit)**
+
+```bash
+git diff
+```
+
+* **See staged changes (staging area vs last commit)**
+
+```bash
+git diff --staged
+```
+
+* **Compare two specific commits**
+
+```bash
+git diff <commit1> <commit2>
+```
+
+> Example: `git diff 1234567 89abcde`
+
+---
+
+## **Tips / Best Practices**
+
+* Make frequent, meaningful commits.
+* Write clear commit messages.
+* Use `git diff` before committing to review changes.
+* Use `git log --oneline` for a quick overview.
+* Press `q` to exit `git log` or `git diff` view.
+
+
