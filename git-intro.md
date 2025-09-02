@@ -111,6 +111,6 @@ git diff --staged (or --cached) #Shows differences between the staging area and 
 
 git blame <file_path>  #show what changed in file, who changed and when
 
-
+git revert <commit_sha> #to revert the changes of specifc commit and commit that revert
 
 ```
