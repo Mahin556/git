@@ -12,10 +12,10 @@ Git was developed by Linus Torvalds in 2005 for Linux kernel development.
 
 what is github?
 ```
-GitHub, a hosting service for Git repositories, allows you to access and download projects from any computer. Here’s what you can do with GitHub:
-Store Repositories: GitHub hosts your repositories.
-Collaborate: Work with other developers from any location.
-Version Control: Manage collaborative workflows using Git and GitHub.
+GitHub, a hosting service(remote server,which is public) for Git repositories, allows you to access and download projects from any computer. Here’s what you can do with GitHub:
+  Store Repositories: GitHub hosts your repositories.
+  Collaborate: Work with other developers from any location.
+  Version Control: Manage collaborative workflows using Git and GitHub.
 ```
 
 ### Files
@@ -105,6 +105,9 @@ git config --global user.email "you@example.com"
 git config --global --unset code.editor
 git config --global init.defaultBranch main
 git config --global color.ui auto #set automatic command line coloring for Git for easy reviewing
+git config --global core.editor "code --wait"
+git config --global core.autocrlf
+git config --global -e #open file .gitconfig for config
 
 git diff #Shows differences between the working directory and the staging area
 git diff --staged (or --cached) #Shows differences between the staging area and the last commit.
