@@ -84,3 +84,75 @@ git diff <commit1> <commit2>
 * Press `q` to exit `git log` or `git diff` view.
 
 
+```bash
+git log --follow [file]
+```
+
+does 👇
+
+---
+
+## 🔹 Purpose
+
+The `--follow` option makes Git **show the history of a file across renames/moves**.
+By default, `git log` only shows commits for the file in its current path.
+If the file was renamed, its history before the rename won’t appear unless you use `--follow`.
+
+---
+
+## 🔹 Syntax
+
+```bash
+git log --follow <file>
+```
+
+---
+
+## 🔹 Example
+
+Suppose you had:
+
+1. `about.html` (original file)
+2. Later renamed to `about-us.html`
+
+Now, running:
+
+```bash
+git log about-us.html
+```
+
+👉 Will show commits **only after the rename**.
+
+But running:
+
+```bash
+git log --follow about-us.html
+```
+
+👉 Will show the **entire history**, including when it was called `about.html`.
+
+---
+
+## 🔹 Useful Options with `--follow`
+
+* Show patch details (diffs):
+
+  ```bash
+  git log --follow -p <file>
+  ```
+* Show history in one line:
+
+  ```bash
+  git log --follow --oneline <file>
+  ```
+* Limit the number of commits:
+
+  ```bash
+  git log --follow -n 5 <file>
+  ```
+
+---
+
+✅ **Use Case**: Perfect when tracking the full evolution of a file, especially in projects where files are frequently renamed or reorganized.
+
+
