@@ -116,4 +116,13 @@ git blame <file_path>  #show what changed in file, who changed and when
 
 git revert <commit_sha> #to revert the changes of specifc commit and commit that revert
 
+git remote add [alias] [url]   # Add a Git URL as an alias
+git fetch [alias]              # Fetch all branches from that remote
+git merge [alias]/[branch]     # Merge a remote branch into current branch
+git push [alias] [branch]      # Push local commits to remote branch
+git pull                       # Fetch + merge changes from remote
+git rm [file]                         # Delete file and stage removal
+git mv [old-path] [new-path]          # Move/rename file and stage move
+git log --stat -M                     # Show commit logs with renamed/moved paths
+
 ```
