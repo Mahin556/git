@@ -120,7 +120,7 @@ git commit -m "Added image to Hello World"
 
 ## **5. Merging Branches**
 
-* **Merge a branch into the current branch:**
+* **Merge a branch(specified branch history-commits) into the current branch:**
 
 ```bash
 git merge <branch-name>
