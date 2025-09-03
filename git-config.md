@@ -172,13 +172,65 @@ init.defaultBranch=main
 
 ---
 
-## 🔹 Key Takeaways
 
+
+### **User Information** 👤
+* `user.email`: **mahinraza556@gmail.com**
+* `user.name`: **MahinRaza** and **Mahin55** (The latter entry seems to override the former, depending on the scope of the config file. A user can have different names/emails for global and local repos).
+
+***
+
+### **Core Configuration** ⚙️
+* `core.repositoryformatversion`: **0**
+* `core.filemode`: **false** (Git will not track changes to file permissions).
+* `core.bare`: **false**
+* `core.logallrefupdates`: **true**
+* `core.symlinks`: **false** (Symbolic links are not created or stored as such).
+* `core.ignorecase`: **true** (Git will ignore file case differences, which is common on Windows and macOS).
+* `core.autocrlf`: **true** (Handles automatic conversion of line endings, common on Windows).
+* `core.fscache`: **true** (Improves performance by caching file system data).
+
+***
+
+### **Remote and Branch Information** 🌳
+* `remote.origin.url`: **[https://github.com/Mahin556/demo-git.git](https://github.com/Mahin556/demo-git.git)** (The URL for the remote named 'origin').
+* `remote.origin.fetch`: **+refs/heads/*:refs/remotes/origin/*** (Specifies which branches to fetch from the remote).
+* `branch.main.remote`: **origin** (Specifies the remote for the 'main' branch).
+* `branch.main.merge`: **refs/heads/main** (Specifies the branch on the remote that 'main' should merge from).
+* `branch.demo.vscode-merge-base`: **origin/main** (A configuration specific to Visual Studio Code for merging).
+
+***
+
+### **HTTP and Credential Settings** 🔒
+* `http.sslbackend`: **schannel** (Specifies the SSL/TLS library to use, in this case, the Windows-native one).
+* `credential.helper`: **manager** (A credential manager is used to store login information).
+* `credential.https://dev.azure.com.usehttppath`: **true** (Allows the credential helper to use the full URL path, useful for specific hosts like Azure DevOps).
+
+***
+
+### **Filter and Diff Settings** 🔍
+* `filter.lfs.clean`: **git-lfs clean -- %f** (Command to run when cleaning files managed by Git Large File Storage).
+* `filter.lfs.smudge`: **git-lfs smudge -- %f** (Command to run when checking out files managed by Git LFS).
+* `filter.lfs.process`: **git-lfs filter-process** (A filter process for LFS).
+* `filter.lfs.required`: **true** (Specifies that Git LFS is required for this repository).
+* `diff.astextplain.textconv`: **astextplain** (A text conversion filter for diffing, useful for non-text files).
+
+***
+
+### **Color Settings** 🎨
+* `color.ui`: **true** (Enables colorized output for all Git commands).
+* `color.status`: **auto**
+* `color.branch`: **auto**
+
+***
+
+### **Pull Configuration** ⬇️
+* `pull.rebase`: **false** (When you run `git pull`, it will perform a merge instead of a rebase).
+
+
+## 🔹 Key Takeaways
 1. Git configs can be **system-wide**, **user-wide**, or **repo-specific**.
 2. **Identity (name + email)** is required before making commits.
 3. You can customize the **editor**, **colors**, and **default branch name**.
 4. Use `git config --list --show-origin` to debug which file is setting a value.
-
-
-
-Do you want me to also create a **one-page cheat sheet (with commands + short descriptions)** for Git configuration that you can keep as a quick reference?
+   
