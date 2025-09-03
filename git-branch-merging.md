@@ -41,9 +41,21 @@
 
 👉 In short: **Branching lets multiple people work in parallel. Each branch is like a separate track, and merging brings the work together. Reverting is easy because changes are grouped by branch merges.**
 
----
-
-Do you want me to also **draw a simple diagram (ASCII/visual)** showing John’s branch, his commits, and the merge back into main? That would make the railway-track analogy clearer.
+Main branch (Piyush working)
+```
+A --- B --- C --- D (main)
+              \
+               \
+                E --- F --- G --- H (john-branch)
+                         (John’s work)
+```
+After merge:
+```
+A --- B --- C --- D ----------- M (merge commit) --- I --- J (main continues)
+              \                 /
+               \               /
+                E --- F --- G --- H (john-branch, merged)
+```
 
 
 ## **1. Branch Creation**
