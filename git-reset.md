@@ -85,6 +85,12 @@ Moves HEAD, deletes **all staged + working directory changes**.
 git reset --hard 9a9add8
 ```
 
+To forcefully push the reset HEAD to remote repo.
+```
+git push -f
+```
+
+
 ⚠️ DANGEROUS — use only if you are sure you want to throw away changes.
 
 ---
