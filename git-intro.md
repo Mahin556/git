@@ -126,4 +126,6 @@ git rm [file]                         # Delete file and stage removal
 git mv [old-path] [new-path]          # Move/rename file and stage move
 git log --stat -M                     # Show commit logs with renamed/moved paths
 
+git push --all
+
 ```
