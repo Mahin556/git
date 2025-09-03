@@ -116,6 +116,24 @@ git push origin v1.0
 
 ---
 
+### 9. IGNORING PATTERNS
+
+Prevent unintentional staging/committing of files.
+
+```
+git config --global core.excludesfile [file]   # Set global ignore file
+```
+
+📌 Usually, you also create a .gitignore file inside your repo to ignore project-specific files:
+
+** Example .gitignore **
+```
+node_modules/
+*.log
+.env
+```
+---
+
 # ✅ Summary of Good Git Habits
 
 * 📌 Commit often, with clear messages.
