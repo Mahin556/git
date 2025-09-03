@@ -235,6 +235,10 @@ ls
 git status
 ```
 
+* ** Push branch and changes to remote repo**
+```
+git push --set-upstream origin branch-one
+
 ---
 
 ### **Best Practices for Branching**
