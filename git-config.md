@@ -169,6 +169,13 @@ core.editor=code --wait
 color.ui=true
 init.defaultBranch=main
 ```
+---
+### Changing or Unsetting Config Values
+Again run `git config` to overwrite the values or using --unset flag to unset the value.
+```
+git config --global --unset code.editor
+```
+
 
 ---
 
