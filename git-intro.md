@@ -5,9 +5,10 @@ version control in a process of tracking and managing all tha changes in source 
 
 what is git?
 ```
-Git is open-source distributed version control system (DVCS) which track and manage the changes in code base.
-We can use Git privately as well as publically.
-Git was developed by Linus Torvalds in 2005 for Linux kernel development. 
+- Tracker --> track the changes in the files
+- Git is open-source distributed version control system (DVCS) which track and manage the changes in code base.
+- We can use Git privately as well as publically.
+- Git was developed by Linus Torvalds in 2005 for Linux kernel development. 
 ```
 
 what is github?
