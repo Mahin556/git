@@ -71,18 +71,7 @@ git restore <file>
 git restore --staged <file> - Unstage a file == git reset HEAD <file_name>
 git reset [file] # unstaged, but file.txt still modified(keeps changes in your working directory)
 git rm --cached <file>
-git commit -m "message" - Commit staged changes with a message
-git commit -a -m "message" - Commit all tracked changes (skip staging) but not work with new/untracked file only work with modified/deleted file
-git log #See commit history
-git log --oneline #shorter view
-git log --stat #see which files changed in each commit
-git commit #add commit in message file or add multi-line commit
-git commit --amend #to add files to your last commit.
-git commit --amend --no-edit #Quickly add staged changes to last commit, keep message
-git commit -a  ---> add + commit
-git commit --allow-empty -m "Start project" #Create an empty commit
-git commit --no-edit #Use previous commit message (no editor)
-git commit --amend -m "Corrected message" #to fix typo in last commit message
+
 
 git show <commit_sha> #show the changes in commit
 git reset --soft HEAD~1 # to undo the last commit and keep your changes staged when accidentally committed the wrong files.
