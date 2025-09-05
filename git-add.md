@@ -110,6 +110,14 @@ Now `index.html` is no longer staged.
 * **Forgot to stage a file?** → Run `git add <file>` before commit
 * **Not sure what’s staged?** → Run `git status`
 
+### Other
+```
+git add <file> - Stage a file
+git add .
+git add *
+git add --all or git add -A - Stage all changes
+```
+
 
 
 👉 Do you want me to also make you a **visual diagram (image)** of the staging process (Working Directory → Staging Area → Commit)? That could make it even clearer.
