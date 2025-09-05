@@ -92,23 +92,7 @@ git show <commit_sha> #show the changes in commit
 git reset --soft HEAD~1 # to undo the last commit and keep your changes staged when accidentally committed the wrong files.
 git reset --hard <commit_sha> #to revert back to the previous commit
 
-git config credential.helper "cache --timeout=3600"
-git config --list
-git config --local --list
-git config user.name
-git config --local user.name
-git config --global --list 
-git config --system --list 
-git config --system user.name
-git config --system user.name "Your Name"
-git config --global user.name "Your Name"
-git config --global user.email "you@example.com"
-git config --global --unset code.editor
-git config --global init.defaultBranch main
-git config --global color.ui auto #set automatic command line coloring for Git for easy reviewing
-git config --global core.editor "code --wait"
-git config --global core.autocrlf
-git config --global -e #open file .gitconfig for config
+
 
 git diff #Shows differences between the working directory and the staging area
 git diff --staged (or --cached) #Shows differences between the staging area and the last commit.
