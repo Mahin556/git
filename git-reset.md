@@ -176,3 +176,160 @@ git reset --hard a1b2c3d
 * **hard = harsh** (wipes everything to match commit)
 
 
+Perfect 👍 You shared a detailed lecture transcript about **`git reset`**.
+Let me now rewrite everything in **clear, structured English** (with examples), so you can fully understand how `git reset` works, especially compared to `git restore`.
+
+---
+
+# 🔹 Git Reset – Complete Guide
+
+## 1. What is `git reset`?
+
+* `git reset` moves the **HEAD** (your branch pointer) to another commit.
+* Depending on the option (`--soft`, `--mixed`, `--hard`), it also affects the **staging area** and **working directory**.
+* Use it when you want to:
+
+  * Unstage files
+  * Undo commits
+  * Completely discard changes
+
+---
+
+## 2. Difference from `git restore`
+
+* `git restore` → only affects **files** (working directory or staging area). It doesn’t move HEAD.
+* `git reset` → moves the **HEAD pointer** to another commit and changes staging/working states.
+
+---
+
+## 3. Use Cases of `git reset`
+
+### (A) Unstage files
+
+If you added files to the staging area (`git add file.txt`) but want to unstage:
+
+```bash
+git reset file.txt
+```
+
+👉 Moves file back to working directory (unstaged).
+👉 Content is unchanged, only staging is reset.
+
+This is similar to:
+
+```bash
+git restore --staged file.txt
+```
+
+---
+
+### (B) Undo the last commit (but keep changes)
+
+```bash
+git reset --soft HEAD~1
+```
+
+* Removes the last commit from history
+* Keeps changes **staged** (ready to recommit)
+
+📌 Example:
+
+* Commit `C1 -> C2 -> C3`
+* Run `git reset --soft HEAD~1`
+* Now history is `C1 -> C2`
+* Changes from `C3` are still in staging area
+
+---
+
+### (C) Undo last commit and unstage changes
+
+```bash
+git reset --mixed HEAD~1
+```
+
+(default if no option is given)
+
+* Removes last commit
+* Keeps changes in working directory
+* Changes are **not staged**
+
+📌 Example:
+
+* Commit `C1 -> C2 -> C3`
+* Run `git reset --mixed HEAD~1`
+* History: `C1 -> C2`
+* Changes from `C3` are now unstaged
+
+---
+
+### (D) Undo last commit and discard changes
+
+```bash
+git reset --hard HEAD~1
+```
+
+* Removes commit(s)
+* Discards all related changes (both staging + working dir)
+* ⚠️ Data is lost unless you recover via `git reflog`.
+
+📌 Example:
+
+* Commit `C1 -> C2 -> C3`
+* Run `git reset --hard HEAD~1`
+* History: `C1 -> C2`
+* Changes from `C3` are completely gone
+
+---
+
+## 4. Reset to a specific commit
+
+Instead of `HEAD~1`, you can give a commit hash:
+
+```bash
+# Soft reset (keep changes staged)
+git reset --soft <commit-hash>
+
+# Mixed reset (keep changes unstaged)
+git reset --mixed <commit-hash>
+
+# Hard reset (discard changes completely)
+git reset --hard <commit-hash>
+```
+
+Example:
+
+```bash
+git reset --hard abc123
+```
+
+👉 Moves HEAD to commit `abc123` and discards everything after.
+
+---
+
+## 5. Summary of Options
+
+| Command                  | Effect on Commit History    | Staging Area          | Working Directory                  |
+| ------------------------ | --------------------------- | --------------------- | ---------------------------------- |
+| `git reset --soft <id>`  | HEAD moves, commits removed | Changes remain staged | Unchanged (staged ready to commit) |
+| `git reset --mixed <id>` | HEAD moves, commits removed | Changes unstaged      | Changes kept in working directory  |
+| `git reset --hard <id>`  | HEAD moves, commits removed | Cleared               | Changes discarded completely       |
+
+---
+
+## 6. Golden Rules
+
+* Use **soft** when you want to redo a commit but keep changes staged.
+* Use **mixed** (default) when you want to unstage changes but keep them.
+* Use **hard** only when you’re 100% sure — it **deletes changes**.
+* If you delete commits by mistake → use `git reflog` to recover.
+
+---
+
+✅ In short:
+
+* `restore` → reset files
+* `reset` → reset commits (HEAD + staging + files depending on mode)
+
+---
+
+Would you like me to also draw a **diagram (visual timeline)** showing how HEAD, staging area, and working directory change for `soft`, `mixed`, and `hard` reset? That can make it super clear.
