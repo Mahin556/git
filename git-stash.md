@@ -315,7 +315,7 @@ Now `git stash list` will show meaningful labels.
 * Stash only one file:
 
   ```bash
-  git stash push home.html
+  git stash -- home.html
   ```
 
 ---
