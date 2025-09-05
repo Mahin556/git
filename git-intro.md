@@ -65,10 +65,6 @@ git push --force origin v1.0
 git --version
 git -v
 git clone <repo>
-git add <file> - Stage a file
-git add .
-git add *
-git add --all or git add -A - Stage all changes
 git status - See what is staged
 git status -s
 git restore <file>
