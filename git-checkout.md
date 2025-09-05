@@ -305,7 +305,7 @@ git checkout -b experiment
 * `git checkout` = moves `HEAD` around (to a branch or commit), and updates working directory accordingly.
 * Detached HEAD = `HEAD` points to a commit hash, not a branch in `refs/heads/`.
 
----
-
-👉 Would you like me to **draw a diagram** showing how `HEAD`, `refs/`, and commits link together when you run `git checkout`? That might make this crystal clear.
-
+### Other
+```
+HEAD always point to current branch and current branch always point to latest commit, HEAD help to keep track ot current branch means in system it will always point to current branch if you change it from other terminal it will reflect change in your terminal
+```
