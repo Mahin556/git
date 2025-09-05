@@ -163,3 +163,188 @@ Working Directory → (git add) → Staging Area → (git commit) → Repository
 
 `git stash` saves your working directory (+ optional index) onto a stack so you can return later without losing progress.
 
+Perfect 👍 — you shared a transcript explaining **`git stash`** in Hindi. Let me translate and restructure it into **clear English with explanations and examples**.
+
+---
+
+# 📦 Git Stash – Save Your Work Temporarily
+
+Sometimes you’re working on something, and:
+
+* You’ve made changes in a file.
+* You want to switch branches.
+* But you **don’t want to carry those local changes** into the other branch.
+* Or Git might even stop you from switching because of **conflicts**.
+
+👉 Solution: use **`git stash`**.
+It saves your local changes in a temporary place, cleans your working directory, and lets you switch freely. Later, you can bring your changes back.
+
+---
+
+## 1. Save Changes with `git stash`
+
+Example:
+
+```bash
+# You edited home.html
+git status
+# shows changes not staged
+git stash
+```
+
+Output:
+
+```
+Saved working directory and index state WIP on master...
+```
+
+Now:
+
+* Your working directory is clean (like the last commit).
+* Changes are saved in a “stash stack”.
+
+---
+
+## 2. Switching Branches Safely
+
+```bash
+git switch contact-us
+# now you’re on another branch with no conflicts
+```
+
+You can work here without carrying old changes.
+Then return:
+
+```bash
+git switch master
+```
+
+---
+
+## 3. Bring Stashed Changes Back
+
+List all stashes:
+
+```bash
+git stash list
+```
+
+Example output:
+
+```
+stash@{0}: WIP on master: 2f0240 last commit msg
+```
+
+Apply the latest stash and remove it from the stack:
+
+```bash
+git stash pop
+```
+
+Apply the latest stash but **keep it in the list**:
+
+```bash
+git stash apply
+```
+
+---
+
+## 4. Multiple Stashes
+
+You can create multiple stashes:
+
+```bash
+git stash
+git stash
+```
+
+Now `git stash list` will show:
+
+```
+stash@{0}: WIP on master: changes in notfound.html
+stash@{1}: WIP on master: changes in home.html
+```
+
+* `git stash pop` → restores the most recent (`stash@{0}`).
+* To restore a specific stash:
+
+  ```bash
+  git stash apply stash@{1}
+  ```
+
+---
+
+## 5. Managing Stashes
+
+* Drop a specific stash:
+
+  ```bash
+  git stash drop stash@{1}
+  ```
+
+* Clear all stashes:
+
+  ```bash
+  git stash clear
+  ```
+
+* Name a stash for clarity:
+
+  ```bash
+  git stash save "about and home changes"
+  ```
+
+Now `git stash list` will show meaningful labels.
+
+---
+
+## 6. Stash Only Specific Files
+
+* Stash only staged changes:
+
+  ```bash
+  git stash --keep-index
+  ```
+
+* Stash untracked files too:
+
+  ```bash
+  git stash -u
+  ```
+
+* Stash only one file:
+
+  ```bash
+  git stash push home.html
+  ```
+
+---
+
+## 7. Preview a Stash Before Applying
+
+```bash
+git stash show stash@{0}
+git stash show -p stash@{0}   # with detailed diff
+```
+
+---
+
+## ⚡ Quick Recap
+
+* `git stash` → save all changes temporarily.
+* `git stash pop` → restore latest changes and remove from stash.
+* `git stash apply` → restore changes but keep them in stash.
+* `git stash list` → see all stashes.
+* `git stash drop` → delete a stash.
+* `git stash clear` → remove all.
+* Add flags (`-u`, file name) for more control.
+
+---
+
+✅ In short: **`git stash` = a clipboard for your work in progress**.
+You can stash changes, switch branches freely, and reapply them later without losing anything.
+
+---
+
+Do you want me to also connect this with **HEAD and refs** (like we did earlier), showing how stash is internally stored?
+
