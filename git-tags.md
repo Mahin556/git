@@ -118,6 +118,24 @@
 
 ---
 
+### Tags
+```
+git tag <tagname> - Create a lightweight tag
+git tag -a <tagname> -m "message" - Create an annotated tag
+git tag -a <tagname> -m "message" <commit-hash> - Tag a specific commit
+git tag - List tags
+git show <tagname> - Show tag + commit details
+git push origin v1.0
+git push --tags
+git tag -d v1.0 #Delete a tag locally
+git push origin --delete tag v1.0 #Delete a tag from remote
+git push --tags #Push all tags at once
+
+#Move a tag to a different commit and update the remote:
+git tag -f v1.0 <new-commit-hash>
+git push --force origin v1.0
+```
+
 👉 In short:
 
 * **Tags = bookmarks for commits** (mostly used for releases).
