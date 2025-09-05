@@ -234,6 +234,27 @@ git config --global --unset code.editor
 ### **Pull Configuration** ⬇️
 * `pull.rebase`: **false** (When you run `git pull`, it will perform a merge instead of a rebase).
 
+###
+```
+git config credential.helper "cache --timeout=3600"
+git config --list
+git config --local --list
+git config user.name
+git config --local user.name
+git config --global --list 
+git config --system --list 
+git config --system user.name
+git config --system user.name "Your Name"
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+git config --global --unset code.editor
+git config --global init.defaultBranch main
+git config --global color.ui auto #set automatic command line coloring for Git for easy reviewing
+git config --global core.editor "code --wait"
+git config --global core.autocrlf
+git config --global -e #open file .gitconfig for config
+```
+
 
 ## 🔹 Key Takeaways
 1. Git configs can be **system-wide**, **user-wide**, or **repo-specific**.
