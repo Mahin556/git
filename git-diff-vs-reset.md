@@ -46,3 +46,7 @@
 * **Staging area ↔ Last commit** → `git diff --staged`
 * **Remove from staging, keep changes** → `git reset [file]`
 
+### Other
+```
+git diff HEAD
+```
