@@ -119,5 +119,44 @@ git add --all or git add -A - Stage all changes
 ```
 
 
+* **`git add -A` (or `--all`)**
 
-👉 Do you want me to also make you a **visual diagram (image)** of the staging process (Working Directory → Staging Area → Commit)? That could make it even clearer.
+  * Stages **everything**: new files, modified files, and deleted files across the **entire working tree**.
+  * Works no matter where you run it (top-level or subdirectory).
+  * Since Git v2, this is the **default behavior** of `git add`.
+
+---
+
+* **`git add -u` (or `--update`)**
+
+  * Stages **only modified and deleted files**.
+  * Does **not** stage new/untracked files.
+  * Can be scoped to a directory (only stages changes inside that directory).
+
+---
+
+* **`git add .`**
+
+  * Stages new, modified, and deleted files — **but only from the current directory downward**.
+  * If run at the repo root → behaves like `git add -A`.
+  * If run inside a subdirectory → ignores changes outside that directory.
+
+---
+
+* **`git add *`**
+
+  * Uses the **shell’s wildcard expansion**, not Git’s logic.
+  * Adds visible files in the current directory (no hidden files like `.gitignore` or `.env`).
+  * Does not handle deleted files correctly.
+  * Can produce **unexpected results**, so it’s generally **not recommended**.
+
+---
+
+👉 **In practice**:
+
+* Use `git add -A` (or just `git add`) to stage everything.
+* Use `git add -u` when you want to stage only changes/deletions (skip new files).
+* Use `git add .` if you want to limit staging to the current directory.
+* Avoid `git add *`.
+
+
