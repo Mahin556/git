@@ -27,8 +27,12 @@ GitHub, a hosting service(remote server,which is public) for Git repositories, a
 ```
 
 
-### Stash
-#### What is stash?
+### Init
+```
+git init
+git init .
+git init ./demo/
+```
 
 
 ```
