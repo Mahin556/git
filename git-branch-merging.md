@@ -330,6 +330,16 @@ git commit
 git branch -d emergency-fix
 ```
 
+To delete a remote branch:
+```bash
+git push origin --delete branch-name
+```
+
+To rename a branch using the command line:
+```bash
+git branch -m old-name new-name
+```
+
 ---
 
 ## 🔹 Types of Merges
