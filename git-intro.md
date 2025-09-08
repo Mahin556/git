@@ -71,4 +71,6 @@ git log --stat -M                     # Show commit logs with renamed/moved path
 
 git push --all
 
+git clean -f    # to remove all untracked file from the dir
+
 ```
