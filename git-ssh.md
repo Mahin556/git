@@ -112,7 +112,7 @@ git pull origin main
 
 ```
 ssh-keygen - Generate a new SSH key pair
-ssh-add - Add your private key to the SSH agent
+ssh-add ~/.ssh/id_rsa - Add your private key to the SSH agent
 ssh -T git@github.com - Test SSH connection
 ssh-add -l - List loaded SSH keys
 ssh-add -d - Remove a key from agent
