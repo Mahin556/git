@@ -343,4 +343,71 @@ git reset --hard <good-ref>
 * **`revert`** *adds* a new commit that undoes another. Best for **shared/public** branches.
 * Keep `git reflog` in your back pocket—**it rescues almost everything**.
 
-If you want, I can turn this into a printable **cheat sheet PDF** (tables + commands + flowcharts) for your team.
+You’ve nailed the **essence of `git revert`** 👍 — let me help you polish and **deepen the understanding** with extra clarity, examples, and a clean comparison between `reset`, `checkout`, and `revert`.
+
+---
+
+### 🔹 What `git revert` actually does
+
+* It **does not delete history** (unlike `reset --hard` or `push --force`).
+* Instead, it **creates a new commit** that undoes the changes introduced by a specific commit.
+* This is why it’s the **safest option** when working with shared repositories.
+
+Example:
+
+```bash
+# Undo a specific commit (say, abc123)
+git revert abc123
+git push origin main
+```
+
+Result:
+
+* `abc123` still exists in history.
+* A new commit (e.g., `revert abc123`) appears that **removes the changes** introduced in `abc123`.
+
+---
+
+### 🔹 Workflow with `git revert`
+
+1. You commit something:
+
+   ```bash
+   git commit -m "Added Hello World"
+   git push origin main
+   ```
+2. Later you realize it was a mistake.
+3. Use:
+
+   ```bash
+   git revert <commit-id>
+   ```
+
+   → Your editor opens to confirm the commit message (`Revert "Added Hello World"`).
+4. Push again:
+
+   ```bash
+   git push origin main
+   ```
+5. Remote branch now shows:
+
+   * `Added Hello World`
+   * `Revert "Added Hello World"`
+
+---
+
+### 🔹 Comparison Table (Fixed & Clearer)
+
+| Command        | Scope          | What it Does                                      | Commit History    | Safety for Remote |
+| -------------- | -------------- | ------------------------------------------------- | ----------------- | ----------------- |
+| `git checkout` | Local only     | Discards uncommitted changes or switches branches | No history change | Safe              |
+| `git reset`    | Local only     | Removes commits (`--soft`, `--mixed`, `--hard`)   | Rewrites history  | Unsafe if pushed  |
+| `git revert`   | Local → Remote | Undoes a commit by creating a new “revert commit” | Preserves history | Safe              |
+
+---
+
+### 🔹 Key Points
+
+* **Use `reset` for local cleanup** before pushing.
+* **Use `revert` for undoing changes already pushed** to remote branches.
+* **Never use `reset --hard + push --force`** on `main` or shared branches unless your team explicitly agrees.
