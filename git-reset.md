@@ -1,23 +1,20 @@
 
-# Git Reset
-
-**Change Platform:**
-Shift focus to **GitHub** | **Bitbucket** | **GitLab**
-
----
-
-## 🔹 What Does Git Reset Do?
+## GIT RESET
 
 The `git reset` command **moves your branch’s HEAD** to a different commit.
 It can:
-
-* Undo commits
-* Unstage files
-* Discard changes
+   * Undo commits
+   * Unstage files
+   * Discard changes
 
 ⚠️ Unlike `git revert`, `git reset` can **rewrite history**, so use with care — especially in shared repositories.
 
 ---
+
+```
+git reset --hard f414f31
+git reset --soft HEAD@{1}
+```
 
 ## 🔹 Summary of Git Reset Commands and Options
 
@@ -332,4 +329,55 @@ git reset --hard abc123
 
 ---
 
-Would you like me to also draw a **diagram (visual timeline)** showing how HEAD, staging area, and working directory change for `soft`, `mixed`, and `hard` reset? That can make it super clear.
+### 🔹 Recap: Local `git reset`
+
+* **Unstaging files** (without losing changes):
+
+  ```bash
+  git reset HEAD <filename>
+  ```
+
+  → Moves file from staging back to working directory. Changes are safe.
+
+---
+
+### 🔹 Why commits remain in **remote repo**
+
+* `git reset` **only affects your local repository**.
+* Remote (like GitHub, GitLab, Bitbucket) still has the old history because it doesn’t know you rewound your commits.
+
+---
+
+### 🔹 How to remove commits from **remote repository**
+
+There are two main strategies:
+
+1. **Force Push after Reset (destructive)**
+
+   * Use when you want remote history to match your local reset.
+
+   ```bash
+   git reset --hard HEAD~1   # or HEAD~n
+   git push origin main --force
+   ```
+
+   ⚠ This rewrites history and **removes commits for everyone**. Other collaborators must sync carefully.
+
+2. **Revert Commit (safe way)**
+
+   * Instead of deleting, it creates a new commit that undoes changes.
+
+   ```bash
+   git revert <commit-hash>
+   git push origin main
+   ```
+
+   ✔ Keeps history intact. Recommended for shared/public branches.
+
+---
+
+### 🔹 When to Use What
+
+* **Reset + Force Push** → Only on private branches (your own feature branch).
+* **Revert** → On shared/public branches (like `main`, `develop`).
+
