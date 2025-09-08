@@ -47,6 +47,11 @@ Here’s a **clear and practical summary of Git push to GitHub** with the main i
     git push origin v1.0
     ```
 
+Push all your local branches to GitHub:
+```
+git push --all origin
+```
+
 ---
 
 * **Troubleshooting**
