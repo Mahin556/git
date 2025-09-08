@@ -24,6 +24,8 @@
 | `git revert --continue`     | Continue revert after conflict resolution |
 | `git revert --abort`        | Abort the revert if conflicts occur       |
 | `git log --oneline`         | View commit history to find commit hash   |
+| `git revert --skip`         |                                           |
+| ``
 
 ---
 
