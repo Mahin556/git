@@ -131,7 +131,7 @@ git add --all or git add -A - Stage all changes
 
   * Stages **only modified and deleted files**.
   * Does **not** stage new/untracked files.
-  * Can be scoped to a directory (only stages changes inside that directory).
+  * Work like -A or --all but only for update and deleted files.
 
 ---
 
