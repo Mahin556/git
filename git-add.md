@@ -104,21 +104,6 @@ Now `index.html` is no longer staged.
 
 ---
 
-## 🔹 Troubleshooting
-
-* **Staged the wrong file?** → `git restore --staged <file>`
-* **Forgot to stage a file?** → Run `git add <file>` before commit
-* **Not sure what’s staged?** → Run `git status`
-
-### Other
-```
-git add <file> - Stage a file
-git add .
-git add *
-git add --all or git add -A - Stage all changes
-```
-
-
 * **`git add -A` (or `--all`)**
 
   * Stages **everything**: new files, modified files, and deleted files across the **entire working tree**.
@@ -149,14 +134,5 @@ git add --all or git add -A - Stage all changes
   * Adds visible files in the current directory (no hidden files like `.gitignore` or `.env`).
   * Does not handle deleted files correctly.
   * Can produce **unexpected results**, so it’s generally **not recommended**.
-
----
-
-👉 **In practice**:
-
-* Use `git add -A` (or just `git add`) to stage everything.
-* Use `git add -u` when you want to stage only changes/deletions (skip new files).
-* Use `git add .` if you want to limit staging to the current directory.
-* Avoid `git add *`.
 
 
