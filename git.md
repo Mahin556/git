@@ -625,3 +625,969 @@ git revert a3f5b92                  # Undo commit but keep history intact
 git pull --rebase      # Download new commits from remote and reapply your commits on top (fixes push conflicts)
 git push               # Push your rebased commits successfully after resolving the history mismatch
 ```
+
+---
+
+```bash
+# ─────────────────────────────────────────────────────────────────────────────
+# GIT CHECKOUT — COMPLETE PRACTICAL + INTERNALS GUIDE (CLEAN & COMBINED)
+# ─────────────────────────────────────────────────────────────────────────────
+
+# 1️⃣ WHAT IS `git checkout`?
+# ---------------------------
+# A multi-purpose Git command used to:
+#   • switch branches
+#   • create new branches
+#   • restore files
+#   • checkout old commits (detached HEAD mode)
+
+# Since Git 2.23+, Git added:
+#   • `git switch`   → for branch switching
+#   • `git restore`  → for file restoration
+# but `git checkout` still works universally.
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 2️⃣ COMMON USAGE OF git checkout
+# -------------------------------
+
+# ✓ Switch to a branch
+git checkout feature
+git checkout master
+
+# ✓ Switch back to previous branch
+git checkout -
+
+# ✓ Create & switch to a new branch
+git checkout -b test
+
+# ✓ Delete a branch
+git branch -d branch-name
+
+# ✓ Restore (discard) changes in a file
+git checkout hobbies.txt
+
+# ✓ Restore all files
+git checkout .
+
+# ✓ Restore file from a specific commit
+git checkout <commit-hash> -- file.txt
+
+# ✓ Checkout a commit (detached HEAD)
+git checkout <commit-hash>
+
+# ✓ Relative checkout
+git checkout HEAD~2
+
+# ✓ Checkout remote branch
+git checkout -t origin/feature
+# or
+git checkout feature
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 3️⃣ DETACHED HEAD (VERY IMPORTANT)
+# ---------------------------------
+# Normal:
+#   HEAD → branch → latest commit
+#
+# Detached HEAD:
+#   HEAD → specific commit (no branch)
+#
+# If you want to save work in detached mode:
+git checkout -b backup
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 4️⃣ GIT INTERNALS — HOW CHECKOUT WORKS INTERNALLY
+# -------------------------------------------------
+
+# The `.git/HEAD` file tells Git WHERE YOU ARE.
+
+# 📌 Two modes of HEAD:
+
+# A. ATTACHED HEAD (normal branch mode)
+# --------------------------------------
+# HEAD contains a reference (not a commit hash):
+ref: refs/heads/main
+
+# Meaning:
+#   HEAD → refs/heads/main → commit hash
+
+# B. DETACHED HEAD
+# ----------------
+# HEAD contains a commit hash directly:
+a1b2c3d4e5f67890...
+
+# Working tree now corresponds to that commit only.
+
+# 📌 refs/ directory structure
+# ----------------------------
+# .git/
+#   ├─ HEAD
+#   └─ refs/
+#       ├─ heads/     # Local branches
+#       │    ├─ main
+#       │    ├─ feature1
+#       │    └─ bugfix
+#       ├─ remotes/   # Remote tracking branches
+#       └─ tags/      # Tags
+
+# When you run `git checkout branch`:
+#   → HEAD changes to "ref: refs/heads/branch"
+#   → Working directory updates to that commit.
+
+# When you run `git checkout <commit>`:
+#   → HEAD becomes a raw hash (detached)
+#   → Working directory reflects that old snapshot.
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 5️⃣ HEAD vs INDEX vs WORKING DIRECTORY
+# --------------------------------------
+
+# HEAD  → last committed snapshot of your current branch
+# INDEX → staging area (files to be committed next)
+# WORKING DIRECTORY → your actual files on disk
+
+# Example:
+git checkout -- file.txt
+# Restores file from HEAD → discards local changes.
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 6️⃣ git checkout vs git switch / git restore
+# --------------------------------------------
+
+# Switch branch:
+git checkout main       # old
+git switch main         # new
+
+# Create branch:
+git checkout -b dev     # old
+git switch -c dev       # new
+
+# Restore file:
+git checkout -- file    # old
+git restore file        # new
+
+# Checkout commit:
+git checkout abc123     # old
+git switch --detach abc123   # new
+
+```
+
+---
+
+```bash
+# ─────────────────────────────────────────────────────────────────────────────
+# ⚙️ GIT CONFIGURATION GUIDE — SYSTEM, GLOBAL, LOCAL, COMMANDS, VIEWING & EDITING
+# ─────────────────────────────────────────────────────────────────────────────
+
+# 1️⃣ WHERE GIT STORES CONFIGURATIONS
+# -----------------------------------
+# Git uses `git config` to manage settings at 3 levels:
+
+# SYSTEM LEVEL  (affects ALL users + ALL repos)
+# Location: /etc/gitconfig  (or Program Files/Git/etc/gitconfig on Windows)
+git config --system <key> <value>
+
+# GLOBAL LEVEL  (affects CURRENT USER across all repos)
+# Location: ~/.gitconfig OR ~/.config/git/config
+git config --global <key> <value>
+
+# LOCAL LEVEL  (affects ONLY the current repository)
+# Location: .git/config inside the repo
+git config --local <key> <value>
+
+# ✔ Precedence: LOCAL > GLOBAL > SYSTEM
+# If the same key exists in multiple locations, LOCAL overrides GLOBAL,
+# and GLOBAL overrides SYSTEM.
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 2️⃣ VIEW CONFIGURATIONS
+# -----------------------
+
+# View all settings + which file they came from:
+git config --list --show-origin
+
+# View only local settings:
+git config --local --list
+
+# View only global settings:
+git config --global --list
+
+# View only system settings:
+git config --system --list
+
+# View a single config value:
+git config user.name
+git config user.email
+
+# See origin of a specific key:
+git config --show-origin user.name
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 3️⃣ SETTING USER IDENTITY (REQUIRED BEFORE COMMITS)
+# ---------------------------------------------------
+
+# Set global identity:
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+
+# Set identity for a specific repo only:
+git config user.name "Project User"
+git config user.email "project@example.com"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 4️⃣ CONFIGURE YOUR DEFAULT EDITOR
+# ---------------------------------
+
+# VS Code:
+git config --global core.editor "code --wait"
+
+# Vim:
+git config --global core.editor "vim"
+
+# Nano:
+git config --global core.editor "nano"
+
+# Windows Notepad:
+git config --global core.editor "notepad"
+
+# Full path example (Windows):
+git config --global core.editor "H:/Microsoft VS Code/bin/code --wait"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 5️⃣ ENABLE COLORS FOR BETTER READABILITY
+# ---------------------------------------
+
+git config --global color.ui true
+git config --global color.status auto
+git config --global color.branch auto
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 6️⃣ SET DEFAULT BRANCH NAME
+# ---------------------------
+
+git config --global init.defaultBranch main
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 7️⃣ EDIT, CHANGE OR UNSET CONFIG VALUES
+# ---------------------------------------
+
+# Open global config in editor:
+git config --global -e
+
+# Unset (remove) a config:
+git config --global --unset core.editor
+
+# Replace/update a config:
+git config --global user.name "New Name"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 8️⃣ COMMON GIT CONFIG COMMANDS (CHEAT SHEET)
+# -------------------------------------------
+
+git config credential.helper "cache --timeout=3600"
+git config --local --list
+git config user.name
+git config --local user.name
+git config --system user.name "Your Name"
+git config --global core.autocrlf
+git config --global color.ui auto
+git config --global init.defaultBranch main
+git config --global core.editor "code --wait"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 9️⃣ INTERPRETING YOUR CONFIG OUTPUT
+# -----------------------------------
+
+# USER INFO:
+#   user.name = MahinRaza / Mahin55   (local override beats global)
+#   user.email = mahinraza556@gmail.com
+
+# CORE SETTINGS:
+#   core.filemode = false            (ignore permission changes)
+#   core.ignorecase = true           (case-insensitive FS, Windows/Mac)
+#   core.autocrlf = true             (line-end normalization)
+#   core.fscache = true              (performance improvement)
+#   core.symlinks = false            (Windows limitation)
+
+# REMOTE & BRANCH:
+#   remote.origin.url = https://github.com/Mahin556/demo-git.git
+#   branch.main.remote = origin
+#   branch.main.merge = refs/heads/main
+
+# HTTP / CREDENTIAL:
+#   http.sslbackend = schannel
+#   credential.helper = manager
+
+# LFS FILTER:
+#   filter.lfs.clean = git-lfs clean
+#   filter.lfs.smudge = git-lfs smudge
+#   filter.lfs.required = true
+
+# COLOR SETTINGS:
+#   color.ui = true
+
+# PULL BEHAVIOR:
+#   pull.rebase = false  (git pull = merge)
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 🔟 KEY TAKEAWAYS
+# ----------------
+# ✔ Git has 3 config levels — LOCAL > GLOBAL > SYSTEM  
+# ✔ You MUST set user.name + user.email before commits  
+# ✔ `git config --list --show-origin` helps debug config issues  
+# ✔ Editors, colors, default branch & line endings are commonly configured  
+# ✔ Local configuration always overrides global/system  
+# ✔ Use `git config -e` to safely edit config files  
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 🎯 BEST PRACTICE SUMMARY
+# -------------------------
+#   • Set your identity globally  
+#   • Customize your editor  
+#   • Configure colors for clarity  
+#   • Prefer `main` as default branch  
+#   • Use `--show-origin` to resolve conflicts  
+#   • Understand precedence to avoid confusion  
+
+# ─────────────────────────────────────────────────────────────────────────────
+```
+
+---
+
+```bash
+# =============================================================================
+# 1️⃣ FIX THE LAST COMMIT (safest)
+# =============================================================================
+
+# Change last commit message:
+git commit --amend -m "New commit message"
+
+# Add/remove files into last commit:
+git add file.txt
+git commit --amend
+
+# Amend without changing message:
+git commit --amend --no-edit
+git commit --amend --no-edit #Delete latest commit and create a new one with new hash with same content.
+```
+
+---
+
+```bash
+# ─────────────────────────────────────────────────────────────────────────────
+# 🔥 GIT RESET IN DEPTH — SOFT vs MIXED vs HARD (FULL EXPLANATION)
+# ─────────────────────────────────────────────────────────────────────────────
+# Git reset moves:
+#   1. HEAD       → which commit your branch points to
+#   2. INDEX      → staging area (what’s ready to commit)
+#   3. WORKTREE   → actual files on disk
+#
+# Reset changes WHERE your branch points AND optionally resets staged/unstaged files.
+#
+# Reset types:
+#   • --soft      → move HEAD ONLY
+#   • --mixed     → move HEAD + reset INDEX
+#   • --hard      → move HEAD + reset INDEX + reset WORKTREE
+#
+# NOTE: "HEAD~1" means "one commit before the current commit".
+# ─────────────────────────────────────────────────────────────────────────────
+
+
+# =============================================================================
+# 1️⃣ SOFT RESET — HEAD moves, INDEX + WORKING DIRECTORY remain untouched
+# =============================================================================
+git reset --soft HEAD~1
+
+# ✔ WHAT IT DOES:
+#   • HEAD moves backward by 1 commit
+#   • The undone commit’s changes remain *staged*
+#
+# ✔ IDEAL WHEN:
+#   • You want to combine (squash) multiple commits into one
+#   • You committed too early, want to re-commit with more changes
+#   • You want to redo last commit cleanly
+#
+# ✔ VISUAL:
+# BEFORE:
+#   HEAD → C3 → C2 → C1
+#
+# AFTER `git reset --soft HEAD~1`:
+#   HEAD → C2 → C1
+#   Changes from C3 = staged in INDEX
+#
+# ✔ EXAMPLE WORKFLOW:
+#   # You made commit with typo or incomplete changes:
+#   git reset --soft HEAD~1     # Undo commit but keep changes staged
+#   git add more_changes.txt
+#   git commit -m "Fixed + completed commit"
+#
+# Nothing in working directory is touched. Nothing is lost.
+# Safe and easy for rewriting your *last few commits*.
+# Give prefrence to file from CWD-->STAGING over a files from COMMIT-->STAGING.
+
+
+# =============================================================================
+# 2️⃣ MIXED RESET — HEAD moves, INDEX reset (default mode)
+# =============================================================================
+git reset HEAD~1        # same as: git reset --mixed HEAD~1
+
+# ✔ WHAT IT DOES:
+#   • HEAD moves backward by 1 commit
+#   • Changes from undone commit become *unstaged*
+#   • Working directory remains unchanged
+#
+# ✔ IDEAL WHEN:
+#   • You want to edit part of the undone commit
+#   • You want to re-stage files selectively
+#   • You want to "uncommit" but not lose changes
+#
+# ✔ VISUAL:
+# BEFORE:
+#   HEAD → C3 → C2 → C1
+#
+# AFTER:
+#   HEAD → C2 → C1
+#   Changes from C3 → moved to WORKING DIRECTORY (unstaged)
+#
+# ✔ EXAMPLE WORKFLOW:
+#   git reset HEAD~1
+#   # Now you can stage files selectively:
+#   git add file1
+#   git add file3
+#   git commit -m "New cleaner commit"
+#
+# This is the most common reset for fixing a bad commit.
+
+
+# =============================================================================
+# 3️⃣ HARD RESET — HEAD, INDEX, WORKTREE all reset (DANGEROUS)
+# =============================================================================
+git reset --hard HEAD~1
+
+# ✔ WHAT IT DOES:
+#   • HEAD moves backward by 1 commit
+#   • INDEX cleared to match commit
+#   • WORKING DIRECTORY files overwritten
+#
+# ⚠ RESULT:
+#   • The undone commit disappears
+#   • All changes in INDEX + WORKTREE are ERASED
+#
+# ✔ IDEAL WHEN:
+#   • You want to discard local experiments completely
+#   • You want to return repo EXACTLY to a previous commit
+#
+# ✔ VISUAL:
+# BEFORE:
+#   HEAD → C3 → C2 → C1
+#
+# AFTER:
+#   HEAD → C2 → C1
+#   Changes in C3 + working directory = ERASED
+#
+# ✔ EXAMPLE USE CASE:
+#   # You created garbage commits and want to start over:
+#   git reset --hard HEAD~1
+#
+# ⚠ WARNING:
+#   • DO NOT USE if commit was already pushed.
+#   • Only use when you're 100% sure losing changes is OK.
+
+
+# =============================================================================
+# 4️⃣ COMPARISON TABLE — SOFT vs MIXED vs HARD
+# =============================================================================
+
+# WHAT IS RESET?
+# Reset modifies 3 things: HEAD (branch pointer), INDEX (staging area), WORKTREE (files).
+
+#      ┌──────────────┬──────────────┬──────────────┬───────────────┐
+#      │ RESET TYPE    │ HEAD MOVED?  │ INDEX RESET? │ WORKTREE RESET│
+#      ├──────────────┼──────────────┼──────────────┼───────────────┤
+#      │ --soft        │ YES          │ NO           │ NO            │
+#      │ --mixed       │ YES          │ YES          │ NO            │
+#      │ --hard        │ YES          │ YES          │ YES           │
+#      └──────────────┴──────────────┴──────────────┴───────────────┘
+
+# Cheat Summary:
+#   soft  → "undo commit but leave everything staged"
+#   mixed → "undo commit but leave changes unstaged"
+#   hard  → "undo commit AND delete changes"
+
+
+# =============================================================================
+# 5️⃣ PRACTICAL USAGE SCENARIOS
+# =============================================================================
+
+# ● YOU WANT TO FIX THE LAST COMMIT (typo, forgot files)
+git reset --soft HEAD~1
+# → fixes commit but keeps all changes staged
+
+# ● YOU WANT TO MODIFY PART OF THE LAST COMMIT
+git reset HEAD~1
+# → files are unstaged; choose what to commit
+
+# ● YOU WANT TO DELETE BAD CHANGES ENTIRELY
+git reset --hard HEAD~1
+
+# ● YOU WANT TO SQUASH MULTIPLE COMMITS MANUALLY
+git reset --soft HEAD~3
+git commit -m "Squashed all 3 commits"
+
+# ● YOU COMMITTED WRONG FILES
+git reset HEAD~1   # unstages them so you can re-commit correctly
+
+
+# =============================================================================
+# 6️⃣ VERY IMPORTANT WARNINGS
+# =============================================================================
+
+# ❌ Never hard reset a pushed commit.
+# ❌ Never rewrite public/shared history unless coordinated.
+# ✔ Always make a backup branch before resetting:
+
+git branch backup-before-reset
+
+# ✔ Use hard reset ONLY in personal branches or local experiments.
+
+
+# =============================================================================
+# 7️⃣ BONUS: RESET VS REVERT (MOST COMMON CONFUSION)
+# =============================================================================
+
+# RESET  → rewrites history (dangerous), moves HEAD backwards.
+# REVERT → creates a new commit that undoes changes safely.
+
+# Example:
+git revert <commit-id>
+# → safe for shared branches because it does NOT delete history.
+
+# Reset = rewrite
+# Revert = patch that undoes safely
+# =============================================================================
+```
+
+---
+
+```bash
+# ─────────────────────────────────────────────────────────────────────────────
+# 📜 GIT HISTORY & DIFF COMMANDS — FULL GUIDE WITH THEORY (LOG, SHOW, DIFF, FOLLOW)
+# ─────────────────────────────────────────────────────────────────────────────
+
+
+# =============================================================================
+# 1️⃣ VIEW COMMIT HISTORY
+# =============================================================================
+
+# ✔ Full commit history (detailed view: author, date, message, diff context)
+git log
+
+# ✔ One-line summary per commit (clean, compact)
+git log --oneline
+
+# ✔ Filter commits by author name or email
+git log --author="Alice"
+
+# ✔ Show commits from a specific period
+git log --since="2 weeks ago"
+git log --since="2024-01-01"
+
+# ✔ Show which files changed per commit (summary)
+git log --stat
+
+# ✔ Visualize commit history as a graph of branches & merges
+git log --graph --oneline --decorate --all
+
+
+# =============================================================================
+# 2️⃣ VIEW DETAILS OF A SPECIFIC COMMIT
+# =============================================================================
+
+# ✔ Display full commit info + patch/diff
+git show <commit_hash>
+
+# Example:
+git show 09f4acd
+
+# Shows:
+#   • commit message
+#   • author + date
+#   • file changes
+#   • diff of each changed file
+
+
+# =============================================================================
+# 3️⃣ COMPARE CHANGES (DIFF)
+# =============================================================================
+
+# ✔ Diff of unstaged changes (working directory vs last commit)
+git diff
+
+# ✔ Diff of staged changes (index vs last commit)
+git diff --staged
+
+# ✔ Compare ANY two commits
+git diff <commit1> <commit2>
+
+# Example:
+git diff 1234567 89abcde
+
+# ✔ Compare commit vs working directory:
+git diff <commit> .
+
+
+# =============================================================================
+# 4️⃣ FILE HISTORY ACROSS RENAMES — git log --follow
+# =============================================================================
+# By default, git log ONLY shows history of the file in its current path.
+# If the file was renamed/moved, Git does NOT show history before rename.
+
+# → Use --follow to track history through renames.
+
+git log --follow <file>
+
+# Example:
+git log --follow about-us.html
+
+# This shows:
+#   • commits when file was called "about.html"
+#   • commits after it became "about-us.html"
+
+
+# -----------------------------------------------------------------------------
+# 🔹 Useful options with --follow
+# -----------------------------------------------------------------------------
+
+# ✔ Show commit diffs for this file only
+git log --follow -p <file>
+
+# ✔ One-line format
+git log --follow --oneline <file>
+
+# ✔ Show only last N commits
+git log --follow -n 5 <file>
+
+# ✔ Show complete rename detection + patches
+git log --follow -M -p <file>
+
+
+# =============================================================================
+# 5️⃣ BEST PRACTICES
+# =============================================================================
+
+# ✔ Make small, meaningful commits
+# ✔ Review changes using:
+git diff         # before staging
+git diff --staged   # before committing
+
+# ✔ Use compact history view:
+git log --oneline --graph
+
+# ✔ Press 'q' to exit log, diff, or show views
+# ✔ Use --since to find active development periods
+# ✔ Use --follow for files that were moved or renamed
+
+
+# =============================================================================
+# 🧠 SUMMARY OF WHAT EACH COMMAND DOES
+# =============================================================================
+
+# git log              → detailed commit history
+# git log --oneline   → compact history
+# git log --graph     → visualize branches and merges
+# git show <commit>   → inspect a specific commit
+# git diff            → working directory vs HEAD
+# git diff --staged   → index vs HEAD
+# git diff A B        → compare any two commits
+# git log --follow    → show file history including renames
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+```
+
+---
+
+```bash
+# ─────────────────────────────────────────────────────────────────────────────
+# 🔄 GIT FETCH, DIFF, MERGE, PULL, PUSH — FULL GUIDE (BRANCH COMPARISON)
+# ─────────────────────────────────────────────────────────────────────────────
+
+
+# =============================================================================
+# 1️⃣ LIST ALL BRANCHES (LOCAL + REMOTE)
+# =============================================================================
+
+git branch -a
+
+# Shows:
+#   • Local branches        →   main, feature/login
+#   • Remote branches       →   origin/main, origin/dev, upstream/main
+
+
+# =============================================================================
+# 2️⃣ UPDATE REMOTE-TRACKING BRANCHES (IMPORTANT)
+# =============================================================================
+# Before comparing your work with remote, always fetch updates.
+
+git fetch                  # updates all remotes
+git fetch origin           # updates only origin
+git fetch origin main      # fetch only main branch from origin
+git fetch upstream main    # fetch from another remote
+
+
+# WHY FETCH?
+# ----------
+# Git does NOT automatically update:
+#   origin/main
+#   origin/dev
+#   upstream/main
+# You MUST fetch to sync remote-tracking references.
+
+
+# =============================================================================
+# 3️⃣ COMPARE LOCAL BRANCH WITH REMOTE BRANCH
+# =============================================================================
+
+# Syntax:
+git diff <local-branch> <remote>/<branch>
+
+# Examples:
+git diff origin/main              # compare current branch with origin/main
+git diff main origin/main         # compare local main vs remote main
+git diff feature/login origin/main
+
+# Meaning:
+#   → Shows what will change if you merge or pull.
+
+
+# TIP:
+# To preview what your *push* will send to remote:
+git diff origin/main main
+
+
+# =============================================================================
+# 4️⃣ COMPARE TWO COMMITS
+# =============================================================================
+
+git diff <commit1> <commit2>
+
+# Example:
+git diff 12ab34c a98fde0
+
+
+# =============================================================================
+# 5️⃣ MERGE REMOTE BRANCH INTO LOCAL BRANCH
+# =============================================================================
+# You must be on the branch you want to update.
+
+# Example: Merge remote main → local main
+git checkout main
+git merge origin/main
+
+# After merge:
+#   → Your local main now includes remote changes.
+
+
+# =============================================================================
+# 6️⃣ GIT PULL (FETCH + MERGE)
+# =============================================================================
+
+git pull
+
+# Equivalent to:
+#   git fetch
+#   git merge origin/<current-branch>
+
+# Example:
+git pull origin main
+
+
+# =============================================================================
+# 7️⃣ PUSH CHANGES TO REMOTE
+# =============================================================================
+
+git push origin main
+
+# If remote is already set for the branch:
+git push origin
+
+
+# =============================================================================
+# 8️⃣ VIEW REMOTE BRANCH LOGS
+# =============================================================================
+
+git log origin/main
+git log origin/dev
+
+
+# =============================================================================
+# 9️⃣ SHORTCUTS & BEST PRACTICES
+# =============================================================================
+
+# ✔ Before comparing: always fetch
+git fetch
+
+# ✔ To compare your branch with upstream:
+git diff origin
+
+# This works if:
+#   • Your branch tracks origin/<branch>
+#   • "origin" is the upstream of your branch
+
+
+# ✔ Best way to preview changes before pushing:
+git diff origin/<branch> <branch>
+
+# Example:
+git diff origin/main main
+
+
+# ✔ To see what changed on remote since last fetch:
+git log HEAD..origin/main --oneline
+
+
+# =============================================================================
+#  🔟 COMPARISON SUMMARY TABLE
+# =============================================================================
+
+# Compare local ↔ remote:
+git diff main origin/main
+
+# Compare working directory ↔ HEAD:
+git diff
+
+# Compare staging area ↔ HEAD:
+git diff --staged
+
+# Compare commit ↔ commit:
+git diff C1 C2
+
+# Compare remote ↔ local BEFORE pulling:
+git diff origin/main main
+
+# View remote logs:
+git log origin/main
+
+# Fetch remote updates:
+git fetch
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+```
+
+
+* git switch
+```bash
+# Introduced in Git 2.23 to simplify branch switching and creation.
+# `git switch` is safer and clearer than:
+#     git checkout <branch>
+# switch   = branch-only operations (clean, simple)
+# ─────────────────────────────────────────────────────────────────────────────
+
+# =============================================================================
+# 1️⃣ SWITCH TO AN EXISTING BRANCH
+# =============================================================================
+git switch <branch>
+# Example:
+git switch main
+git switch dev
+# This is equivalent to:
+#   git checkout main
+# But safer and clearer.
+
+# =============================================================================
+# 2️⃣ CREATE A NEW BRANCH AND SWITCH TO IT
+# =============================================================================
+git switch -c <new-branch>
+# Example:
+git switch -c feature/login
+# Same as:
+#   git checkout -b feature/login
+
+
+# =============================================================================
+# 3️⃣ SWITCH BACK TO PREVIOUS BRANCH (toggle)
+# =============================================================================
+git switch -
+#git checkout -
+# Useful when switching between two branches repeatedly.
+
+
+# =============================================================================
+# 4️⃣ SWITCH BRANCHES EVEN WITH UNSAVED CHANGES
+# =============================================================================
+# If your working directory has modifications:
+#   • Git may block switching if changes would be overwritten.
+# Force switch while keeping changes:
+git switch --merge <branch>
+# OR:
+git switch --discard-changes <branch>   # WARNING: discards changes permanently
+
+# =============================================================================
+# 5️⃣ SWITCH TO A BRANCH THAT HAS NO WORKTREE YET (multi-worktree setups)
+# =============================================================================
+git switch --detach <commit>
+# Equivalent of: git checkout <commit> (detached HEAD)
+# Example:
+git switch --detach HEAD~2
+
+# =============================================================================
+# 6️⃣ VIEW WHICH BRANCH WILL BE SWITCHED TO (tracking info)
+# =============================================================================
+# List branches:
+git branch
+# Show branch + upstream tracking:
+git branch -vv
+```
+
+```bash
+┌──────────────────────── HOW TO CLONE ALL BRANCHES IN GIT ────────────────────────┐
+│                                                                                  │
+│ By default, when you clone a Git repository, all branches are downloaded,        │
+│ but only one branch (usually main or master) is checked out locally.             │
+│                                                                                  │
+│ Clone the repository (this already fetches all branches):                        │
+│                                                                                  │
+│   git clone <repository-url>                                                     │
+│                                                                                  │
+│ View all branches (local + remote):                                              │
+│                                                                                  │
+│   git branch -a                                                                  │
+│                                                                                  │
+│ Fetch all remote branches explicitly:                                            │
+│                                                                                  │
+│   git fetch --all                                                               │
+│                                                                                  │
+│ Create local branches for all remote branches:                                   │
+│                                                                                  │
+for branch in $(git branch -r | grep -v '\->'); do                             
+  git branch --track "${branch#origin/}" "$branch"                             
+done                                                                           
+│                                                                                  │
+│ Verify all local branches:                                                       │
+│                                                                                  │
+│   git branch                                                                    │
+│                                                                                  │
+│ Switch to any branch:                                                            │
+│                                                                                  │
+│   git checkout <branch-name>                                                     │
+│   or                                                                             │
+│   git switch <branch-name>                                                       │
+│                                                                                  │
+│ Important points:                                                                │
+│ • git clone downloads all branch data by default                                 │
+│ • Remote branches appear as origin/branch-name                                   │
+│ • Local branches are created only when checked out or tracked                    │
+│ • Loop command is useful when repository has many branches                       │
+│                                                                                  │
+│ Manual alternative:                                                             │
+│                                                                                  │
+│   git branch -r                                                                 │
+│   git checkout -b <branch-name> origin/<branch-name>                              │
+│                                                                                  │
+│ Interview one-liner:                                                             │
+│ “Git clone fetches all branches by default, but only the default branch is       │
+│  checked out locally. Other branches must be explicitly created or tracked.”     │
+│                                                                                  │
+└──────────────────────────────────────────────────────────────────────────────────┘
+```
