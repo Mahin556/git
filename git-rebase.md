@@ -292,3 +292,121 @@ If you want, I can also **draw a simple visual diagram comparing merge vs rebase
 
 Do you want me to do that?
 
+---
+
+## Git Rebase – Complete Notes
+
+### What is Git Rebase?
+
+**Rebasing** is the process of changing the **parent commit** of a branch. Instead of a branch branching off from an old commit, rebasing makes it look like the branch was created from the **latest commit** of another branch (like `main`).
+
+> In simple terms: Rebase **rewrites history** by changing the base (parent) of your branch.
+
+---
+
+### Visual Explanation (From the Demo)
+
+**Initial Setup:**
+- First commit: `hello.txt` with "Hello World"
+- Created a `feature` branch from the first commit
+- Made **3 commits** on the `feature` branch
+- Switched to `main` branch and added **1 new commit** (different file)
+
+**Before Rebase:**
+```
+main:     A (first) --- B (new file)
+feature:  A (first) --- C --- D --- E (3 commits)
+```
+- `feature` branch is still pointing to commit `A` as its parent
+
+**After Rebase (`git rebase main` while on `feature`):**
+```
+main:     A --- B
+feature:  A --- B --- C' --- D' --- E'
+```
+- Now `feature` branch looks like it was created from commit `B` (latest main)
+- The 3 commits are **rewritten** with new commit IDs
+
+---
+
+### Command Used
+
+```bash
+# First, switch to the branch you want to rebase
+git switch feature
+
+# Then rebase it onto the main branch
+git rebase main
+```
+
+---
+
+### Key Things to Understand
+
+| Concept | Explanation |
+|---------|-------------|
+| **Parent pointer changes** | The branch's base commit changes to the latest commit of the target branch |
+| **History is rewritten** | Commit IDs change (new SHA hashes are generated) |
+| **Linear history** | Results in a cleaner, linear project history |
+| **No merge commit created** | Unlike `git merge`, rebase doesn't create an extra commit |
+
+---
+
+### When to Use Rebase
+
+#### ✅ Good Use Cases:
+1. **Working alone** on a feature branch – rebase keeps history clean
+2. **You need latest configuration/changes** from `main` into your feature branch
+3. **Before pushing** a feature branch to keep history linear
+4. **Updating your branch** without creating merge commits
+
+#### ❌ When NOT to Use Rebase:
+> **Avoid rebasing on shared/public branches** (branches that other developers are using)
+
+- If a team is working together, rebase causes confusion
+- Other developers won't understand where branches are coming from
+- Rewriting shared history can cause serious problems for others
+
+---
+
+### Conflicts During Rebase
+
+- Conflicts can **still happen** if you modify the **same file** in both branches
+- The process is similar to merge conflicts but uses:
+  ```bash
+  git rebase --continue   # After resolving conflicts
+  git rebase --abort      # To cancel the rebase
+  git rebase --skip       # To skip a problematic commit
+  ```
+
+> The video mentions conflicts will be covered in the next video.
+
+---
+
+### Rebase vs Merge – Quick Comparison
+
+| Feature | Rebase | Merge |
+|---------|--------|-------|
+| History | Linear, clean | Preserves actual branch structure |
+| Merge commit | No | Yes |
+| Commit IDs | Changed (rewritten) | Same as original |
+| Best for | Private branches | Shared/public branches |
+| Complexity | Higher (rewrites history) | Lower |
+
+---
+
+### Important Warnings
+
+1. **Never rebase branches that others are working on** – It rewrites history and causes chaos for your team
+
+2. **Commit IDs change** – After rebase, your commits get **new IDs**. Take screenshots or note old IDs to see the difference
+
+3. **Looks like magic but isn't** – Git makes it appear that your branch started from the latest commit, but internally it's reapplying your changes
+
+4. **Useful for configuration updates** – If another developer adds config changes to `main`, you can rebase to include them in your feature branch
+
+---
+
+### Summary
+
+> **Git Rebase** changes the base (parent) of your branch to another branch's latest commit. It creates a **clean, linear history** but **rewrites commit IDs**. Use it when working **alone** or to **update your branch** with latest changes. **Avoid rebasing on shared branches** – that's when you should use `git merge` instead.

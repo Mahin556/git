@@ -42,81 +42,7 @@ git reset --soft HEAD~1 #Undo last commit, keep changes staged
 
 git commit -m "demo" --author="Alice <alice@example.com>"
 ```
-```bash
-git log #View commit history
-git log --oneline #short history
-git log --stat #Show files changed per commit
 
-git log -n 5       # Show last 5 commits
-git log -5         # Same as above
-git log --oneline -n 1 #last commit in short
-
-git log --pretty=short     # Short commit info
-git log --pretty=full      # Author + Committer
-git log --pretty=fuller    # Extra detail
-git log --pretty=raw       # Raw format
-git log --pretty=oneline   # Each commit in one line
-git log --pretty=format:"%h %an %s"
-
-# * `%h` → short hash
-# * `%an` → author name
-# * `%s` → subject (message)
-# * `%ad` → author date
-# * `%cn` → committer name
-# * `%d` → decorations (branch, tag)
-
-git log --pretty=format:"%h - %an (%ad): %s" --date=short
-
-git log --author="Alice"
-
-git log --grep="bugfix"
-
-git log --since="2 weeks ago"
-git log --until="2025-09-01"
-git log --since="2025-08-01" --until="2025-09-01"
-
-git log -- main.py
-git log src/ utils/
-
-git log abc123..def456   # Commits between two SHAs
-git log last5th-commit..lastcommit
-git log HEAD~5..HEAD     # Last 5 commits
-
-git log --author="Bob" --grep="feature" --since="1 month ago"
-
-git log --author="Alice" --oneline --stat #Show Author Stats
-
-git log --graph #graph mode
-
-#Decorate with Branch/Tags
-git log --decorate
-git log --oneline --decorate --graph
-
-git log -p
-git log -p -2   # Show last 2 commits with changes
-
-git log --stat
-git log --shortstat
-git log --numstat
-
-git log --date=relative #Relative Dates
-
-#Different Date Formats
-git log --date=iso
-git log --date=short
-git log --date=raw
-git log --date=format:'%Y-%m-%d %H:%M'
-
-git log --abbrev-commit #Abbrev Commit IDs
-
-git log -g #Show Reflog
-
-git log --merges --oneline #Show Only Merge Commits
-
-git log --oneline --graph --all --decorate
-
-git log -p -- README.md #Show Commits Touching a File
-```
 ```bash
 git help #List all commands
 
@@ -458,6 +384,10 @@ git branch                        # List all branches
 #   hello-world-images
 # * master
 
+git branch --merged
+git branch --no-merged
+git branch -l 'feature/*'
+
 git checkout <branch-name>        # Switch to an existing branch
 git checkout hello-world-images   # Example
 
@@ -474,6 +404,8 @@ git commit -m "Added image"       # Example
 
 git merge <branch-name>           # Merge into current branch
 git merge emergency-fix           # Example
+
+git merge --abort
 
 git branch -d <branch-name>       # Delete merged branch
 git branch -d hello-world-images  # Example
@@ -1170,33 +1102,7 @@ git revert <commit-id>
 ---
 
 ```bash
-# ─────────────────────────────────────────────────────────────────────────────
-# 📜 GIT HISTORY & DIFF COMMANDS — FULL GUIDE WITH THEORY (LOG, SHOW, DIFF, FOLLOW)
-# ─────────────────────────────────────────────────────────────────────────────
 
-
-# =============================================================================
-# 1️⃣ VIEW COMMIT HISTORY
-# =============================================================================
-
-# ✔ Full commit history (detailed view: author, date, message, diff context)
-git log
-
-# ✔ One-line summary per commit (clean, compact)
-git log --oneline
-
-# ✔ Filter commits by author name or email
-git log --author="Alice"
-
-# ✔ Show commits from a specific period
-git log --since="2 weeks ago"
-git log --since="2024-01-01"
-
-# ✔ Show which files changed per commit (summary)
-git log --stat
-
-# ✔ Visualize commit history as a graph of branches & merges
-git log --graph --oneline --decorate --all
 
 
 # =============================================================================
@@ -1235,74 +1141,12 @@ git diff 1234567 89abcde
 # ✔ Compare commit vs working directory:
 git diff <commit> .
 
+git diff branch1 branch2
 
-# =============================================================================
-# 4️⃣ FILE HISTORY ACROSS RENAMES — git log --follow
-# =============================================================================
-# By default, git log ONLY shows history of the file in its current path.
-# If the file was renamed/moved, Git does NOT show history before rename.
+git diff --name-only branch1 branch2
 
-# → Use --follow to track history through renames.
+git diff --name-status branch1 branch2
 
-git log --follow <file>
-
-# Example:
-git log --follow about-us.html
-
-# This shows:
-#   • commits when file was called "about.html"
-#   • commits after it became "about-us.html"
-
-
-# -----------------------------------------------------------------------------
-# 🔹 Useful options with --follow
-# -----------------------------------------------------------------------------
-
-# ✔ Show commit diffs for this file only
-git log --follow -p <file>
-
-# ✔ One-line format
-git log --follow --oneline <file>
-
-# ✔ Show only last N commits
-git log --follow -n 5 <file>
-
-# ✔ Show complete rename detection + patches
-git log --follow -M -p <file>
-
-
-# =============================================================================
-# 5️⃣ BEST PRACTICES
-# =============================================================================
-
-# ✔ Make small, meaningful commits
-# ✔ Review changes using:
-git diff         # before staging
-git diff --staged   # before committing
-
-# ✔ Use compact history view:
-git log --oneline --graph
-
-# ✔ Press 'q' to exit log, diff, or show views
-# ✔ Use --since to find active development periods
-# ✔ Use --follow for files that were moved or renamed
-
-
-# =============================================================================
-# 🧠 SUMMARY OF WHAT EACH COMMAND DOES
-# =============================================================================
-
-# git log              → detailed commit history
-# git log --oneline   → compact history
-# git log --graph     → visualize branches and merges
-# git show <commit>   → inspect a specific commit
-# git diff            → working directory vs HEAD
-# git diff --staged   → index vs HEAD
-# git diff A B        → compare any two commits
-# git log --follow    → show file history including renames
-
-
-# ─────────────────────────────────────────────────────────────────────────────
 ```
 
 ---
@@ -1412,12 +1256,7 @@ git push origin main
 git push origin
 
 
-# =============================================================================
-# 8️⃣ VIEW REMOTE BRANCH LOGS
-# =============================================================================
 
-git log origin/main
-git log origin/dev
 
 
 # =============================================================================
@@ -1442,10 +1281,6 @@ git diff origin/<branch> <branch>
 git diff origin/main main
 
 
-# ✔ To see what changed on remote since last fetch:
-git log HEAD..origin/main --oneline
-
-
 # =============================================================================
 #  🔟 COMPARISON SUMMARY TABLE
 # =============================================================================
@@ -1464,9 +1299,6 @@ git diff C1 C2
 
 # Compare remote ↔ local BEFORE pulling:
 git diff origin/main main
-
-# View remote logs:
-git log origin/main
 
 # Fetch remote updates:
 git fetch
